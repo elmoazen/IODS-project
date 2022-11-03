@@ -1,13 +1,16 @@
 
 # About the project
 
-*Write a short description about the course and add a link to your GitHub repository here. This is an R Markdown (.Rmd) file so you should use R Markdown syntax.*
+*The objective of the course to be familiar with R programing. R is primarily made for statistics and data analysis. During the course we will use R  functions for data manipulation, visualization, and analysis.*
+
+*My GitHub repository: https://github.com/elmoazen/IODS-project .*
+
+*My Link to course diary: https://elmoazen.github.io/IODS-project .*
 
 ```{r}
 # This is a so-called "R chunk" where you can write R code.
-
 date()
-
+1+1
 ```
 The text continues here.
 
