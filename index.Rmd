@@ -1,6 +1,5 @@
 ---
 title: "IODS course project"
-author: Ramy Elmoazen
 output:
   html_document:
     theme: cosmo
