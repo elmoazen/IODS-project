@@ -1,7 +1,7 @@
 
 # About the project
 
-*The objective of the course to be familiar with (R) programming. R is primarily made for statistics and data analysis. During the course we will use R  functions for data manipulation, visualization, and analysis.*
+**The objective of the course is to become familiar with (R) programming, and it was recommended by one of my colleagues. I learned how to install and configure the software necessary for statistical programming. I faced some difficulties in syncing files with GitHub (sometimes it works and sometimes it gives me error messages). I hope the situation will be much easier going forward. I wish the course covered practical issues in statistical computing, R programming, reading data, and writing functions. *
 
 *My GitHub repository: https://github.com/elmoazen/IODS-project .*
 
