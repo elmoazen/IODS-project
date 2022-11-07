@@ -2,7 +2,7 @@
 # About the project
 
 *The objective of the course is to become familiar with (R) programming, and it was recommended by one of my colleagues. I learned how to install and configure the software necessary for statistical programming. I faced some difficulties in syncing files with GitHub (sometimes it works and sometimes it gives me error messages). I hope the situation will be much easier going forward. I wish the course covered practical issues in statistical computing, R programming, reading data, and writing functions. *
-*The R for Health Data Science book is very simple and to the point. I takes sometime to use excersice set 1 with the book but I liked the idea of having all codes in R chunk are indexed in the file*  
+*The R for Health Data Science book is very simple and to the point. It takes some time to use Exercise Set 1 with the book, but I liked the idea of having all codes in R chunks indexed in the file. Some points in the "summarizing the data" chapter were difficult and took time to understand. *  
 
 *My GitHub repository: https://github.com/elmoazen/IODS-project .*
 
