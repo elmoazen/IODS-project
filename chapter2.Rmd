@@ -2,12 +2,147 @@
 
 *Describe the work you have done this week and summarize your learning.*
 
-- Describe your work and results clearly. 
-- Assume the reader has an introductory course level understanding of writing and reading R code as well as statistical methods.
-- Assume the reader has no previous knowledge of your data or the more advanced methods you are using.
+- The data used to explore the effect of students' attitude and different learning strategies  on their performance.
+- The number of students participated in the survey is 183 students. 
+- We have 7 variables in the datasheet: 
+    1. gender :  for the gender of students categorical variable (110 females and 66 males)
+    2. age : the age of the students numerical variable (mean age = 25.51 )
+    3. attitude: numerical data (mean (3.143)
+    4. deep: numerical variable for deep learning (mean= 3.680)
+    5. stra: numerical variable for strategic learning (mean= 3.121 )
+    6. surf: numerical variable for surface learning (mean= 2.787)
+    7. points: exam points for students' achievement(mean= 22.72)
+    
+- Choose three variables as explanatory variables (attitude, deep and stra) and fit a regression model where exam points is the target (dependent, outcome) variable. 
+intercept: 15.4000 which is the points when all other points are 0
+  coefficient of determination (R-squared= 0.2154) : measure of how close the data are to the fitted line. It represents the proportion of the exam points which is explained by the explanatory variables (attitude, deep and stra). So it is here 21.5%. 
+  Adjusted R-squared:  0.195 it is lower the R-squared because some explanatory variables are not contributing in description of exam points.
+  
+   The F-test has a very low associated p-value, so there is very strong evidence that NOT all the three regression coefficients are zero.
+ 
+  t-test is used to test association of exam points with each explanatory variable ( t-value obtained by dividing the estimated regression coefficient by the standard error of the estimate) 
+ the associated significance levels Will not indicate the importance of the explanatory variables in all cases. 
+ the only significant p value is attitude. But to have the higher adjusted R-squared we use both attitude and strategic learning. 
+  
+
+  
+
+
+
+- The Positive attitude is the most important factors that affect students' achievement.
 
 ```{r}
 date()
+
+# All Library Used: 
+      # Access tidyverse package 
+          library(tidyverse)
+      # Access the gglot2 library
+          library(ggplot2)
+      # Access GGally library
+          library(GGally)
+    
+
+
+#1. First Task 
+      # Read the CSV file 
+          learning2014<-read_csv("learning2014.csv")
+
+          dim(learning2014) #Explore the dimensions of the data 
+                # The data structure of 183 students with their demographic data (Gender and age),different learning approaches 
+                #(surface, deep and strategic learning approaches), students' attitude and their achievements in exams. 
+
+          str(learning2014) #Explore the structure  of the data
+                #All data were quantitative data except the gender which is categorical (Males, Females)
+
+ 
+
+# 2. Second Task Graphical Overview
+       # graphical overview of the data.
+          ggpairs(learning2014, mapping = aes(), lower = list(combo = wrap("facethist", bins = 20)))
+
+       # summaries of the variables in the data
+           summary(learning2014)  
+           table(learning2014$gender)
+
+       # a scatter plot of points versus attitude
+           qplot(attitude, points, data = learning2014) + geom_smooth(method = "lm")+ggtitle("Relation Between the Attitude and Exam Points") + theme(plot.title = element_text(hjust = 0.5 , size=15, face="bold", color = "blue"))
+
+        # a scatter plot of points versus deep learning
+            qplot(deep, points, data = learning2014) + geom_smooth(method = "lm")+ggtitle("Relation Between the Deep Learning and Exam Points")+ theme(plot.title = element_text(hjust = 0.5 , size=15, face="bold", color = "blue"))
+  
+       # a scatter plot of points versus Strategic learning
+            qplot(stra, points, data = learning2014) + geom_smooth(method = "lm")+ggtitle("Relation Between the Strategic Learning and Exam Points")+ theme(plot.title = element_text(hjust = 0.5 , size=15, face="bold", color = "blue"))
+
+       # a scatter plot of points versus surface learning
+            qplot(surf, points, data = learning2014) + geom_smooth(method = "lm")+ggtitle("Relation Between the Surface Learning and Exam Points")+ theme(plot.title = element_text(hjust = 0.5 , size=15, face="bold", color = "blue"))
+
+
+
+
+
+# 3. Third Task Choose three variables as explanatory variables and fit a regression model
+  
+            reg_Model <- lm(points ~ attitude + deep+ stra , data = learning2014)
+        
+            
+            # print out a summary of the model
+               summary(reg_Model)
+               coefficients(reg_Model)
+          
+          # intercept: 15.4000 which is the points when all other points are 0.
+          
+          #coefficient of determination (R-squared= 0.2154) : measure of how close the data are to the fitted line. It represents the proportion of the exam points which is explained by the explanatory variables (attitude, deep and stra). So it is here 21.5%.
+               
+          # Adjusted R-squared:  0.195 it is lower the R-squared because some explanatory variables are not contributing in description of exam points.
+  
+          # The F-test has a very low associated p-value, so there is very strong evidence that NOT all the three regression coefficients are zero.
+ 
+          # t-test is used to test association of exam points with each explanatory variable ( t-value obtained by dividing the estimated regression coefficient by the standard error of the estimate) 
+ 
+          # the associated significance levels Will not indicate the importance of the explanatory variables in all cases. The only significant p value is attitude. But to have the higher adjusted R-squared we use both attitude and strategic learning. 
+
+               
+               
+ # the new fitted model 
+               fit_Model <- lm(points ~ attitude + stra , data = learning2014)
+
+
+               
+# 4. Fourth Task Summary : of Fitted Model
+               
+                 # print out a summary of the Fitted model
+               summary(fit_Model)
+               coefficients(fit_Model)
+               
+               
+                # intercept: 8.9729 which is the points when all other points are 0
+                # Multiple R-squared= 0.2048) : measure of how close the data are to the fitted line. It represents the proportion of the exam points which is explained by the explanatory variables (attitude, deep and stra). So it is here 20.5%. lower than the first model as it has less variables. 
+                # Adjusted R-squared:  0.1951 which it is lower the R-squared because some explanatory variables are not contributing in description of exam points
+              
+                # the relation :  Exam point= 8.9729+ (3.466*attitude) + (0.0914* strategic learning)
+               
+#5. Fifth Task:  Diagnostic plots .
+              
+
+# draw diagnostic plots Residuals vs Fitted values 1, Normal QQ-plot 2 and Residuals vs Leverage 5
+
+par(mfrow = c(2,2))
+plot(fit_Model, which=c(1,2,5))
+
+# Assumption: 
+#1.: Residual vs Fitted; This plot is used to determine if the residuals exhibit non-linear patterns. If the red line across the center of the plot is roughly horizontal then we can assume that the residuals follow a linear pattern. In our model is almost horizontal so the linear regression model is appropriate for the dataset
+
+#2: Normal Q-Q:This plot is used to determine if the residuals of the regression model are normally distributed. If the points in this plot fall roughly along a straight diagonal line, then we can assume the residuals are normally distributed. In our model most of the points are roughly along the diagonal line
+
+#5; Residual vs Leverage: This plot is used to identify influential observations. If any points in this plot fall outside of Cook’s distance (the dashed lines) then it is an influential observation.
 ```
+
+
+
+
+
+```
+
 
 Here we go again...
