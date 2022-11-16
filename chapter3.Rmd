@@ -1,0 +1,15 @@
+
+# Chapter 3: Logistic Regression
+
+## 3.1 Create a new R Markdown file 
+
+```{r}
+# File 'chapter3.Rmd' is created and linked to index 
+```
+
+## 3.2 Read Data Files
+```{r}
+1+1
+```
+
+
