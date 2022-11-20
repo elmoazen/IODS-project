@@ -20,7 +20,7 @@ Go to each exercise in turn and do as follows:
 2. Run the (possible) pre-exercise-code chunk.
 3. Follow the instructions to fix the R code!
 
-## 3.0 INSTALL THE REQUIRED PACKAGES FIRST!
+## 3.0 INSTALL THE REQUIRED PACKAGES FIRST
 
 One or more extra packages (in addition to `tidyverse`) will be needed below.
 
@@ -136,7 +136,7 @@ Hints:
 library(dplyr)
 
 # give the columns that vary in the two data sets
-free_cols
+free_cols<-(c("failures", "paid", "absences", "G1", "G2", "G3"))
 
 # the rest of the columns are common identifiers used for joining the data sets
 join_cols <- setdiff(colnames(por), free_cols)
@@ -205,7 +205,7 @@ Hint:
 # dplyr, math_por, join_by are available
 
 # print out the column names of 'math_por'
-
+colnames(math_por)
 
 # create a new data frame with only the joined columns
 alc <- select(math_por, all_of("change me!"))
@@ -233,7 +233,7 @@ for(col_name in free_cols) {
 }
 
 # glimpse at the new combined data
-
+glimpse(alc)
 
 
 ```
@@ -301,13 +301,13 @@ g1 <- ggplot(data = alc, aes(x = alc_use))
 g1 + geom_bar()
 
 # define a new logical column 'high_use'
-alc <- mutate(alc, high_use = "change me!" > 2)
+alc <- mutate(alc, high_use = alc_use > 2)
 
 # initialize a plot of 'high_use'
-g2 <- ggplot(data = alc)
+g2 <- ggplot(data = alc, aes(x = high_use))
 
 # draw a bar plot of high_use by sex
-
+g2 + geom_bar()
 
 ```
 
@@ -350,7 +350,7 @@ Hint:
 library(tidyr); library(dplyr); library(ggplot2)
 
 # glimpse at the alc data
-
+glimpse(alc)
 
 # use gather() to gather columns into key-value pairs and then glimpse() at the resulting data
 gather(alc) %>% glimpse
@@ -359,7 +359,7 @@ gather(alc) %>% glimpse
 gather(alc) %>% View
 
 # draw a bar plot of each variable
-gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free")
+gather(alc) %>% ggplot(aes(value)) + facet_wrap("key", scales = "free")+ geom_bar()
 
 
 ```
@@ -453,16 +453,16 @@ Hints:
 library(ggplot2)
 
 # initialize a plot of high_use and G3
-g1 <- ggplot(alc, aes(x = high_use, y = G3))
+g1 <- ggplot(alc, aes(x = high_use, y = G3, col = sex))
 
 # define the plot as a boxplot and draw it
-g1 + geom_boxplot() + ylab("grade")
+g1 + geom_boxplot() + ylab("grade") 
 
 # initialize a plot of high_use and absences
-
+g2 <- ggplot(alc, aes(x = high_use, y = absences, col = sex))
 
 # define the plot as a box plot and draw it
-
+g2 + geom_boxplot() +  ggtitle("Student absences by alcohol consumption and sex")+ theme(plot.title = element_text(hjust = 0.5 , size=15, face="bold", color = "blue"))
 
 ```
 
@@ -502,10 +502,10 @@ Hint:
 m <- glm(high_use ~ failures + absences, data = alc, family = "binomial")
 
 # print out a summary of the model
-
+summary(m)
 
 # print out the coefficients of the model
-
+coef(m)
 
 ```
 
@@ -553,7 +553,7 @@ m <- glm(high_use ~ failures + absences + sex, data = alc, family = "binomial")
 OR <- coef(m) %>% exp
 
 # compute confidence intervals (CI)
-
+CI<- confint(m)%>% exp
 
 # print out the odds ratios with their confidence intervals
 cbind(OR, CI)
