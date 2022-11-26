@@ -4,12 +4,18 @@ library(dplyr)
 
 # Read in the “Human development” and “Gender inequality” data sets.
 hd <- read_csv("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/human_development.csv")
+
 gii <- read_csv("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-Open-Data-Science/master/datasets/gender_inequality.csv", na = "..")
-str(hd)
-dim(hd)
-str(gii)
-dim(gii)
-hd <- rename(hd, HDI.Rank = "HDI Rank", HDI = "Human Development Index (HDI)",         
+
+str(hd); dim(hd)
+
+str(gii); dim(gii)
+
+summary(hd)
+
+summary(gii)
+
+hd <- rename(hd,  HDI = "Human Development Index (HDI)",         
              Life.Exp = "Life Expectancy at Birth",   edu.exp = "Expected Years of Education",          
              Edu.Mean = "Mean Years of Education",          
              GNI  = "Gross National Income (GNI) per Capita",
