@@ -25,10 +25,11 @@ Go to each exercise in turn and do as follows:
 One or more extra packages (in addition to `tidyverse`) will be needed below.
 
 ```{r}
-# Select (with mouse or arrow keys) the install.packages("...") and
+# Select (with mouse or arrow keys) the 
+install.packages("tidyverse") 
 # run it (by Ctrl+Enter / Cmd+Enter):
 
-# install.packages("FactoMineR")
+install.packages("FactoMineR")
 ```
 
 
@@ -68,10 +69,10 @@ human <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-
 names(human)
 
 # look at the structure of human
-
+str(human)
 
 # print out summaries of the variables
-
+summary(human)
 
 ```
 
@@ -115,10 +116,9 @@ Hints:
 library(stringr)
 
 # look at the structure of the GNI column in 'human'
-
-
+str(human$GNI)
 # remove the commas from GNI and print out a numeric version of it
-str_replace(human$GNI, pattern=",", replace ="")
+str_replace(human$GNI, pattern=",", replace ="") %>% as.numeric()
 
 ```
 
@@ -167,13 +167,15 @@ keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mo
 human <- select(human, one_of(keep))
 
 # print out a completeness indicator of the 'human' data
-complete.cases(human)
+include<-complete.cases(human
+                        )
 
 # print out the data along with a completeness indicator as the last column
-data.frame(human[-1], comp = "change me!")
+human<- data.frame(human[-1], comp = "include")
 
 # filter out all rows with NA values
-human_ <- filter(human, TRUE) # modify the "TRUE", see instructions above!
+human_ <- filter(human, include)
+#instructions above!
 
 
 ```
@@ -203,7 +205,7 @@ human <- read.table("https://raw.githubusercontent.com/KimmoVehkalahti/Helsinki-
 human$GNI <- gsub(",", "", human$GNI) %>% as.numeric
 keep <- c("Country", "Edu2.FM", "Labo.FM", "Life.Exp", "Edu.Exp", "GNI", "Mat.Mor", "Ado.Birth", "Parli.F")
 human <- select(human, one_of(keep))
-human <- filter(human, complete.cases(human))
+human_ <- filter(human, complete.cases(human))
 ```
 
 ### Instructions
@@ -221,13 +223,13 @@ Hint:
 # human without NA is available
 
 # look at the last 10 observations of human
-
+tail(human_, n=10)
 
 # define the last indice we want to keep
-last <- nrow(human) - 7
+last <- nrow(human_) - 7
 
 # choose everything until the last 7 observations
-human_ <- human["change me!", ]
+human_ <- human_[1:last, ]
 
 # add countries as rownames
 rownames(human_) <- human_$Country
@@ -258,7 +260,7 @@ human <- select(human, one_of(keep))
 human <- filter(human, complete.cases(human))
 rownames(human) <- human$Country
 last <- nrow(human) - 7
-human <- human[1:last, ]
+human_ <- human[1:last, ]
 library(corrplot)
 ```
 
@@ -332,7 +334,7 @@ human_std <- scale(human)
 
 # print out summaries of the standardized variables
 
-
+summary (human_std)
 # perform principal component analysis (with the SVD method)
 pca_human <- prcomp(human_std)
 
@@ -446,15 +448,15 @@ library(tidyr)
 keep_columns <- c("Tea", "How", "how", "sugar", "where", "lunch")
 
 # select the 'keep_columns' to create a new dataset
-tea_time <- select(tea, "change me!")
+tea_time <- select(tea, keep_columns)
 
 # look at the summaries and structure of the data
-
+summary(tea_time)
 
 # visualize the dataset
 library(ggplot2)
 pivot_longer(tea_time, cols = everything()) %>% 
-  ggplot(aes(value)) + facet_wrap("name", scales = "free")
+  ggplot(aes(value)) + facet_wrap("name", scales = "free")+geom_bar()+theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8))
 
 
 ```
@@ -498,9 +500,9 @@ Hint:
 
 # multiple correspondence analysis
 library(FactoMineR)
-mca <- MCA("change me!", graph = FALSE)
-
+mca <- MCA(tea_time[, 1:5], graph = FALSE)
 # summary of the model
+summary(mca)
 
 
 # visualize MCA
